@@ -35,12 +35,15 @@ const PageHeader = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="group flex items-center"
+            className="group flex items-center gap-3"
           >
-            <span className={`font-heading text-xl font-semibold tracking-tight transition-colors duration-300 ${
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <span className="text-primary-foreground font-brand font-semibold text-lg">SS</span>
+            </div>
+            <span className={`font-brand text-xl tracking-wide transition-colors duration-300 ${
               isScrolled ? 'text-foreground' : 'text-dental-light'
             } group-hover:text-primary`}>
-              Clinique Dentaire du Parc
+              Sourire & Santé
             </span>
           </Link>
 

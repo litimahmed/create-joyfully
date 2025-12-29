@@ -61,15 +61,15 @@ const Navigation = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="group flex items-center gap-2"
+            className="group flex items-center gap-3"
           >
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-primary-foreground font-heading font-bold text-lg">CD</span>
+              <span className="text-primary-foreground font-brand font-semibold text-lg">SS</span>
             </div>
-            <span className={`font-heading text-xl font-semibold tracking-tight transition-colors duration-300 ${
+            <span className={`font-brand text-xl tracking-wide transition-colors duration-300 ${
               isScrolled ? 'text-foreground' : 'text-dental-light'
             } group-hover:text-primary`}>
-              Centre Dentaire
+              Sourire & Santé
             </span>
           </a>
 
