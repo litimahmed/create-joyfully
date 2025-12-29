@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Clock, ArrowRight, Phone, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { Clock, ArrowRight, Phone, ChevronDown, ChevronUp } from 'lucide-react';
 import { getServiceBySlug, getRelatedServices, type ServiceData } from '@/data/servicesData';
 import { FloatingNav } from '@/components/shared/NavButtons';
 
@@ -9,6 +9,7 @@ const ServiceDetailPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [hoveredProcedure, setHoveredProcedure] = useState<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -137,8 +138,12 @@ const ServiceDetailPage = () => {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
       </section>
 
-      {/* Procedures Section */}
-      <section className="relative py-24 bg-muted">
+      {/* Procedures Section - Bento Grid */}
+      <section className="relative py-24 bg-muted overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-8 left-8 w-20 h-20 border-l-2 border-t-2 border-primary/20" />
+        <div className="absolute bottom-8 right-8 w-20 h-20 border-r-2 border-b-2 border-primary/20" />
+        
         <div className="container mx-auto px-6 lg:px-12">
           <div className="text-center mb-16">
             <p className="font-sans text-xs tracking-[0.3em] uppercase text-primary mb-4">
@@ -150,40 +155,70 @@ const ServiceDetailPage = () => {
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {service.procedures.map((procedure, index) => (
-              <div 
-                key={procedure.name}
-                className={`bg-card rounded-2xl p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-xl flex-shrink-0">
-                    <Check size={20} />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg text-foreground mb-2">{procedure.name}</h3>
-                    <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-3">
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+            {service.procedures.map((procedure, index) => {
+              const ProcedureIcon = procedure.icon;
+              const isLarge = index === 0;
+              
+              return (
+                <div 
+                  key={procedure.name}
+                  className={`group relative overflow-hidden rounded-2xl cursor-pointer ${
+                    isLarge ? 'md:col-span-2 md:row-span-2 aspect-square md:aspect-auto md:min-h-[400px]' : 'aspect-[4/3]'
+                  } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                  onMouseEnter={() => setHoveredProcedure(index)}
+                  onMouseLeave={() => setHoveredProcedure(null)}
+                >
+                  {/* Background Image */}
+                  <img
+                    src={procedure.image}
+                    alt={procedure.name}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                  
+                  {/* Corner Accents */}
+                  <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-primary/0 group-hover:border-primary/60 transition-all duration-500" />
+                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-primary/0 group-hover:border-primary/60 transition-all duration-500" />
+                  
+                  {/* Content */}
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                    {/* Icon */}
+                    <div className={`w-12 h-12 flex items-center justify-center bg-primary/20 backdrop-blur-sm text-primary rounded-xl mb-4 transition-all duration-500 ${hoveredProcedure === index ? 'scale-110 bg-primary text-primary-foreground' : ''}`}>
+                      <ProcedureIcon size={24} />
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="font-heading text-xl md:text-2xl text-background mb-2 group-hover:text-primary transition-colors duration-300">
+                      {procedure.name}
+                    </h3>
+                    
+                    {/* Description - Shows on hover */}
+                    <p className={`font-sans text-sm text-background/70 leading-relaxed transition-all duration-500 ${hoveredProcedure === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                       {procedure.description}
                     </p>
+                    
+                    {/* Duration Badge */}
                     {procedure.duration && (
-                      <div className="flex items-center gap-2 text-primary text-sm">
+                      <div className={`flex items-center gap-2 mt-3 text-primary text-sm transition-all duration-500 ${hoveredProcedure === index ? 'opacity-100' : 'opacity-60'}`}>
                         <Clock size={14} />
                         <span>{procedure.duration}</span>
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="relative py-24 bg-background">
+      {/* Process Section - Horizontal Steps */}
+      <section className="relative py-24 bg-background overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="text-center mb-16">
             <p className="font-sans text-xs tracking-[0.3em] uppercase text-primary mb-4">
@@ -195,39 +230,90 @@ const ServiceDetailPage = () => {
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          {/* Desktop: Horizontal Steps */}
+          <div className="hidden lg:block max-w-6xl mx-auto">
+            <div className="relative flex items-start justify-between">
+              {/* Connecting Line */}
+              <div className="absolute top-12 left-12 right-12 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+              
+              {service.process.map((step, index) => {
+                const StepIcon = step.icon;
+                return (
+                  <div 
+                    key={step.title}
+                    className={`relative flex flex-col items-center text-center flex-1 px-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                    style={{ transitionDelay: `${index * 150}ms` }}
+                  >
+                    {/* Step Number Badge */}
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading text-xs z-20">
+                      {index + 1}
+                    </div>
+                    
+                    {/* Icon Circle */}
+                    <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary/10 group hover:shadow-xl hover:shadow-primary/20 transition-all duration-500">
+                      <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-500">
+                        <StepIcon size={28} className="text-primary" />
+                      </div>
+                    </div>
+                    
+                    {/* Content */}
+                    <h3 className="font-heading text-lg text-foreground mb-2">{step.title}</h3>
+                    <p className="font-sans text-sm text-muted-foreground leading-relaxed max-w-[180px]">
+                      {step.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Mobile: Vertical Steps */}
+          <div className="lg:hidden max-w-md mx-auto">
             <div className="relative">
               {/* Vertical Line */}
-              <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-primary hidden md:block" />
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20" />
               
-              {service.process.map((step, index) => (
-                <div 
-                  key={index}
-                  className={`relative flex items-center gap-6 mb-8 last:mb-0 ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  }`}
-                >
-                  {/* Step Number */}
-                  <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading text-lg z-10">
-                    {index + 1}
-                  </div>
-                  
-                  {/* Content */}
-                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-3rem)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                    <div className="bg-card p-6 rounded-xl border border-border">
-                      <p className="font-sans text-foreground">{step}</p>
+              {service.process.map((step, index) => {
+                const StepIcon = step.icon;
+                return (
+                  <div 
+                    key={step.title}
+                    className={`relative flex gap-6 mb-8 last:mb-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+                    style={{ transitionDelay: `${index * 100}ms` }}
+                  >
+                    {/* Icon Circle */}
+                    <div className="relative z-10 flex-shrink-0">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center shadow-lg">
+                        <StepIcon size={24} className="text-primary" />
+                      </div>
+                      {/* Step Number */}
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading text-xs">
+                        {index + 1}
+                      </div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="pt-3">
+                      <h3 className="font-heading text-lg text-foreground mb-1">{step.title}</h3>
+                      <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                        {step.description}
+                      </p>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="relative py-24 bg-primary/5">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Benefits Section - Professional Feature Cards */}
+      <section className="relative py-24 bg-muted overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="text-center mb-16">
             <p className="font-sans text-xs tracking-[0.3em] uppercase text-primary mb-4">
               Pourquoi Nous Choisir
@@ -238,18 +324,55 @@ const ServiceDetailPage = () => {
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {service.benefits.map((benefit, index) => (
-              <div 
-                key={benefit}
-                className="flex items-center gap-4 bg-card p-5 rounded-xl border border-border"
-              >
-                <div className="w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-full flex-shrink-0">
-                  <Check size={16} />
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {service.benefits.map((benefit, index) => {
+              const BenefitIcon = benefit.icon;
+              const isFeatured = benefit.featured;
+              
+              return (
+                <div 
+                  key={benefit.title}
+                  className={`group relative p-8 rounded-2xl transition-all duration-500 hover:-translate-y-2 ${
+                    isFeatured 
+                      ? 'bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/20' 
+                      : 'bg-card border border-border hover:border-primary/30 hover:shadow-xl'
+                  } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  {/* Icon */}
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 ${
+                    isFeatured 
+                      ? 'bg-primary-foreground/20' 
+                      : 'bg-primary/10'
+                  }`}>
+                    <BenefitIcon size={28} className={isFeatured ? 'text-primary-foreground' : 'text-primary'} />
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className={`font-heading text-xl mb-3 ${
+                    isFeatured ? 'text-primary-foreground' : 'text-foreground'
+                  }`}>
+                    {benefit.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className={`font-sans text-sm leading-relaxed ${
+                    isFeatured ? 'text-primary-foreground/80' : 'text-muted-foreground'
+                  }`}>
+                    {benefit.description}
+                  </p>
+                  
+                  {/* Decorative corner for featured */}
+                  {isFeatured && (
+                    <>
+                      <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-primary-foreground/30" />
+                      <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-primary-foreground/30" />
+                    </>
+                  )}
                 </div>
-                <span className="font-sans text-foreground">{benefit}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -393,21 +516,10 @@ const ServiceDetailPage = () => {
                   Nous Appeler
                 </a>
               </div>
-
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
             </div>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-foreground border-t border-background/10 py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p className="font-sans text-sm text-background/40 tracking-wider">
-            © {new Date().getFullYear()} Sourire & Santé. Tous droits réservés.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };

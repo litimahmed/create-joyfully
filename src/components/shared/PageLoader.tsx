@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import Lottie from 'lottie-react';
-import loaderAnimation from '@/assets/loader.json';
 
 interface PageLoaderProps {
   onLoadComplete?: () => void;
@@ -11,16 +9,14 @@ const PageLoader = ({ onLoadComplete }: PageLoaderProps) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Wait for images and resources to load
     const handleLoad = () => {
-      // Reduced minimum display time for faster page loads
       setTimeout(() => {
         setFadeOut(true);
         setTimeout(() => {
           setIsLoading(false);
           onLoadComplete?.();
-        }, 400); // Match fade-out animation duration
-      }, 600); // Reduced minimum loader display time
+        }, 400);
+      }, 600);
     };
 
     if (document.readyState === 'complete') {
@@ -39,22 +35,26 @@ const PageLoader = ({ onLoadComplete }: PageLoaderProps) => {
         fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Loader Animation */}
-      <div className="w-32 h-32 md:w-40 md:h-40">
-        <Lottie 
-          animationData={loaderAnimation} 
-          loop={true}
-          className="w-full h-full"
-        />
+      {/* Modern 3D Cube Loader */}
+      <div className="perspective-[200px] w-16 h-16 mb-8">
+        <div className="relative w-full h-full animate-[spin_2s_linear_infinite] transform-style-3d">
+          {/* Cube faces */}
+          <div className="absolute inset-0 bg-primary/20 border-2 border-primary animate-pulse" 
+               style={{ transform: 'translateZ(32px)' }} />
+          <div className="absolute inset-0 bg-primary/10 border-2 border-primary/60" 
+               style={{ transform: 'rotateY(90deg) translateZ(32px)' }} />
+          <div className="absolute inset-0 bg-primary/15 border-2 border-primary/80" 
+               style={{ transform: 'rotateX(90deg) translateZ(32px)' }} />
+        </div>
       </div>
       
       {/* Brand Name */}
-      <h1 className="mt-6 font-brand text-2xl md:text-3xl tracking-wide text-foreground">
+      <h1 className="font-brand text-2xl md:text-3xl tracking-wide text-foreground">
         Sourire & Santé
       </h1>
 
       {/* Decorative line */}
-      <div className="mt-6 w-24 h-0.5 bg-primary rounded-full" />
+      <div className="mt-6 w-24 h-0.5 bg-primary rounded-full animate-pulse" />
     </div>
   );
 };
