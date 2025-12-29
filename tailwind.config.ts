@@ -17,6 +17,7 @@ export default {
         serif: ["Poppins", "system-ui", "sans-serif"],
         sans: ["Inter", "system-ui", "sans-serif"],
         heading: ["Poppins", "system-ui", "sans-serif"],
+        brand: ["Playfair Display", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

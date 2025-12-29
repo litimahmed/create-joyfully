@@ -48,14 +48,13 @@ const PageLoader = ({ onLoadComplete }: PageLoaderProps) => {
         />
       </div>
       
-      {/* Restaurant Name */}
-      <h1 className="mt-6 font-serif text-2xl md:text-3xl tracking-[0.3em] text-foreground">
-        MAISON LE SEPT
+      {/* Brand Name */}
+      <h1 className="mt-6 font-brand text-2xl md:text-3xl tracking-wide text-foreground">
+        Sourire & Santé
       </h1>
-      
 
-      {/* Decorative gold line */}
-      <div className="mt-6 w-24 gold-line" />
+      {/* Decorative line */}
+      <div className="mt-6 w-24 h-0.5 bg-primary rounded-full" />
     </div>
   );
 };

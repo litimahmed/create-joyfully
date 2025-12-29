@@ -246,25 +246,25 @@ const GalleryPage = () => {
       <PageHeader />
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-end justify-center overflow-hidden pb-16">
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${dentalHeroBanner}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-dental-dark/70 via-dental-dark/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dental-dark/80 via-dental-dark/60 to-dental-dark/90" />
         
         {/* Hero Content */}
         <div className={`relative z-10 text-center px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <p className="font-sans text-xs tracking-[0.4em] uppercase text-primary mb-4 font-medium">
-            Clinique Dentaire du Parc
+            Sourire & Santé
           </p>
           
           <h1 className="font-heading text-4xl md:text-6xl text-dental-light mb-4 font-semibold">
             Notre <span className="text-primary">Clinique</span>
           </h1>
           
-          <p className="font-sans text-dental-light/70 max-w-lg mx-auto">
+          <p className="font-sans text-dental-light/80 max-w-lg mx-auto text-lg">
             Visite virtuelle de nos espaces modernes et accueillants
           </p>
         </div>
