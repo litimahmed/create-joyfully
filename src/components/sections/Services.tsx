@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 interface Service {
   icon: React.ReactNode;
   title: string;
+  slug: string;
   description: string;
   features: string[];
   featured?: boolean;
@@ -23,18 +24,21 @@ const services: Service[] = [
   {
     icon: <Stethoscope className="w-7 h-7" />,
     title: 'Soins Dentaires',
+    slug: 'soins-dentaires',
     description: 'Examens complets, détartrages professionnels et traitements des caries pour maintenir votre santé bucco-dentaire.',
     features: ['Examens annuels', 'Détartrage', 'Obturations'],
   },
   {
     icon: <Sparkles className="w-7 h-7" />,
     title: 'Esthétique Dentaire',
+    slug: 'esthetique-dentaire',
     description: 'Blanchiment professionnel, facettes et corrections esthétiques pour un sourire éclatant et harmonieux.',
     features: ['Blanchiment', 'Facettes', 'Composite'],
   },
   {
     icon: <CircleDot className="w-7 h-7" />,
     title: 'Implantologie',
+    slug: 'implantologie',
     description: 'Implants dentaires de haute qualité pour remplacer les dents manquantes avec des résultats naturels et durables.',
     features: ['Implants unitaires', 'All-on-4', 'Greffes osseuses'],
     featured: true,
@@ -42,18 +46,21 @@ const services: Service[] = [
   {
     icon: <Baby className="w-7 h-7" />,
     title: 'Pédodontie',
+    slug: 'pedodontie',
     description: 'Soins dentaires adaptés aux enfants dans un environnement chaleureux et rassurant.',
     features: ['Prévention', 'Scellements', 'Suivi croissance'],
   },
   {
     icon: <Heart className="w-7 h-7" />,
     title: 'Orthodontie',
+    slug: 'orthodontie',
     description: 'Alignement dentaire avec appareils traditionnels ou aligneurs invisibles pour tous les âges.',
     features: ['Aligneurs', 'Bagues', 'Contention'],
   },
   {
     icon: <Clock className="w-7 h-7" />,
     title: 'Urgences Dentaires',
+    slug: 'urgences-dentaires',
     description: 'Prise en charge rapide des urgences : douleurs aiguës, traumatismes et infections.',
     features: ['Disponibilité', 'Sans RDV', 'Soins immédiats'],
   },
@@ -205,7 +212,7 @@ const Services = () => {
 
                 {/* CTA Link */}
                 <Link
-                  to="/reservations"
+                  to={`/services/${service.slug}`}
                   className={`inline-flex items-center gap-2 text-sm font-medium transition-all duration-300 group/link ${
                     service.featured
                       ? 'text-primary-foreground hover:gap-3'
