@@ -5,6 +5,16 @@ import {
   Baby, 
   Clock,
   Heart,
+  Search,
+  FileText,
+  Wrench,
+  CheckCircle,
+  Shield,
+  Award,
+  Users,
+  Zap,
+  ThumbsUp,
+  Headphones,
   LucideIcon
 } from 'lucide-react';
 
@@ -12,6 +22,21 @@ export interface ServiceProcedure {
   name: string;
   description: string;
   duration?: string;
+  image: string;
+  icon: LucideIcon;
+}
+
+export interface ProcessStep {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+export interface ServiceBenefit {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  featured?: boolean;
 }
 
 export interface ServiceFAQ {
@@ -28,8 +53,8 @@ export interface ServiceData {
   heroImage: string;
   features: string[];
   procedures: ServiceProcedure[];
-  benefits: string[];
-  process: string[];
+  benefits: ServiceBenefit[];
+  process: ProcessStep[];
   faqs: ServiceFAQ[];
   duration?: string;
   priceRange?: string;
@@ -58,24 +83,25 @@ export const servicesData: ServiceData[] = [
     duration: '30-60 min',
     priceRange: '50€ - 150€',
     procedures: [
-      { name: 'Examen dentaire complet', description: 'Évaluation approfondie de votre santé bucco-dentaire avec radiographies si nécessaire.', duration: '30 min' },
-      { name: 'Détartrage professionnel', description: 'Élimination du tartre et de la plaque dentaire pour des dents propres et saines.', duration: '45 min' },
-      { name: 'Traitement des caries', description: 'Restauration des dents cariées avec des matériaux de haute qualité.', duration: '45-60 min' },
-      { name: 'Polissage dentaire', description: 'Finition brillante pour des dents lisses et éclatantes.', duration: '15 min' },
+      { name: 'Examen dentaire complet', description: 'Évaluation approfondie de votre santé bucco-dentaire avec radiographies si nécessaire.', duration: '30 min', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Search },
+      { name: 'Détartrage professionnel', description: 'Élimination du tartre et de la plaque dentaire pour des dents propres et saines.', duration: '45 min', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Sparkles },
+      { name: 'Traitement des caries', description: 'Restauration des dents cariées avec des matériaux de haute qualité.', duration: '45-60 min', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: Wrench },
+      { name: 'Polissage dentaire', description: 'Finition brillante pour des dents lisses et éclatantes.', duration: '15 min', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800', icon: Sparkles },
     ],
     benefits: [
-      'Prévention des maladies dentaires',
-      'Détection précoce des problèmes',
-      'Économies sur les traitements futurs',
-      'Haleine fraîche et sourire éclatant',
-      'Conseils personnalisés d\'hygiène',
+      { title: 'Prévention', description: 'Évitez les problèmes dentaires avant qu\'ils n\'apparaissent', icon: Shield, featured: true },
+      { title: 'Détection précoce', description: 'Identification rapide des anomalies', icon: Search },
+      { title: 'Économies', description: 'Réduisez vos dépenses de santé futures', icon: Award },
+      { title: 'Sourire éclatant', description: 'Haleine fraîche et dents brillantes', icon: Sparkles },
+      { title: 'Conseils experts', description: 'Recommandations personnalisées d\'hygiène', icon: Users },
+      { title: 'Suivi régulier', description: 'Accompagnement continu de votre santé', icon: CheckCircle },
     ],
     process: [
-      'Accueil et installation confortable',
-      'Examen visuel et radiographique',
-      'Diagnostic et plan de traitement',
-      'Réalisation des soins nécessaires',
-      'Conseils de prévention personnalisés',
+      { title: 'Accueil', description: 'Installation confortable dans notre cabinet', icon: Users },
+      { title: 'Diagnostic', description: 'Examen visuel et radiographique complet', icon: Search },
+      { title: 'Plan de traitement', description: 'Élaboration d\'un plan personnalisé', icon: FileText },
+      { title: 'Soins', description: 'Réalisation des traitements nécessaires', icon: Wrench },
+      { title: 'Conseils', description: 'Prévention personnalisée pour l\'avenir', icon: CheckCircle },
     ],
     faqs: [
       { question: 'À quelle fréquence dois-je faire un détartrage ?', answer: 'Nous recommandons un détartrage tous les 6 à 12 mois selon votre situation bucco-dentaire.' },
@@ -95,24 +121,25 @@ export const servicesData: ServiceData[] = [
     duration: '1-2 heures',
     priceRange: '200€ - 800€',
     procedures: [
-      { name: 'Blanchiment professionnel', description: 'Éclaircissement de plusieurs teintes en une seule séance avec notre technologie avancée.', duration: '1h' },
-      { name: 'Facettes céramique', description: 'Coquilles ultra-fines pour corriger forme, couleur et alignement des dents.', duration: '2 séances' },
-      { name: 'Composite esthétique', description: 'Restaurations invisibles pour des dents parfaitement naturelles.', duration: '45 min' },
-      { name: 'Contourage dentaire', description: 'Remodelage subtil pour harmoniser la forme de vos dents.', duration: '30 min' },
+      { name: 'Blanchiment professionnel', description: 'Éclaircissement de plusieurs teintes en une seule séance avec notre technologie avancée.', duration: '1h', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Sparkles },
+      { name: 'Facettes céramique', description: 'Coquilles ultra-fines pour corriger forme, couleur et alignement des dents.', duration: '2 séances', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: Award },
+      { name: 'Composite esthétique', description: 'Restaurations invisibles pour des dents parfaitement naturelles.', duration: '45 min', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Wrench },
+      { name: 'Contourage dentaire', description: 'Remodelage subtil pour harmoniser la forme de vos dents.', duration: '30 min', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800', icon: CheckCircle },
     ],
     benefits: [
-      'Sourire plus blanc et lumineux',
-      'Correction des imperfections',
-      'Résultats naturels et durables',
-      'Boost de confiance en soi',
-      'Techniques non-invasives',
+      { title: 'Sourire lumineux', description: 'Dents plus blanches et plus éclatantes', icon: Sparkles, featured: true },
+      { title: 'Corrections invisibles', description: 'Résultats naturels et indétectables', icon: CheckCircle },
+      { title: 'Confiance en soi', description: 'Retrouvez l\'assurance d\'un beau sourire', icon: Heart, featured: true },
+      { title: 'Durabilité', description: 'Résultats qui durent dans le temps', icon: Shield },
+      { title: 'Non-invasif', description: 'Techniques respectueuses de vos dents', icon: ThumbsUp },
+      { title: 'Personnalisé', description: 'Traitement adapté à votre visage', icon: Users },
     ],
     process: [
-      'Consultation esthétique personnalisée',
-      'Simulation du résultat final',
-      'Choix des matériaux et teintes',
-      'Réalisation du traitement',
-      'Suivi et ajustements si nécessaire',
+      { title: 'Consultation', description: 'Analyse esthétique personnalisée', icon: Users },
+      { title: 'Simulation', description: 'Visualisation du résultat final', icon: Search },
+      { title: 'Préparation', description: 'Choix des matériaux et teintes', icon: FileText },
+      { title: 'Traitement', description: 'Réalisation soignée du soin', icon: Wrench },
+      { title: 'Finalisation', description: 'Ajustements et suivi', icon: CheckCircle },
     ],
     faqs: [
       { question: 'Combien de temps dure le blanchiment ?', answer: 'Les résultats du blanchiment durent de 1 à 3 ans selon votre hygiène de vie et vos habitudes alimentaires.' },
@@ -133,24 +160,25 @@ export const servicesData: ServiceData[] = [
     duration: '3-6 mois',
     priceRange: '1500€ - 3500€',
     procedures: [
-      { name: 'Implant unitaire', description: 'Remplacement d\'une seule dent avec un implant et une couronne sur mesure.', duration: '3-4 mois' },
-      { name: 'All-on-4', description: 'Restauration complète d\'une arcade avec seulement 4 implants.', duration: '1 journée' },
-      { name: 'Greffe osseuse', description: 'Augmentation du volume osseux pour permettre la pose d\'implants.', duration: '4-6 mois' },
-      { name: 'Sinus lift', description: 'Élévation du plancher sinusien pour implants maxillaires.', duration: '6 mois' },
+      { name: 'Implant unitaire', description: 'Remplacement d\'une seule dent avec un implant et une couronne sur mesure.', duration: '3-4 mois', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: CircleDot },
+      { name: 'All-on-4', description: 'Restauration complète d\'une arcade avec seulement 4 implants.', duration: '1 journée', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800', icon: Award },
+      { name: 'Greffe osseuse', description: 'Augmentation du volume osseux pour permettre la pose d\'implants.', duration: '4-6 mois', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Wrench },
+      { name: 'Sinus lift', description: 'Élévation du plancher sinusien pour implants maxillaires.', duration: '6 mois', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Search },
     ],
     benefits: [
-      'Solution permanente et stable',
-      'Apparence naturelle identique',
-      'Préservation de l\'os de la mâchoire',
-      'Confort de mastication optimal',
-      'Aucun entretien particulier',
+      { title: 'Solution permanente', description: 'Implants stables et durables à vie', icon: Shield, featured: true },
+      { title: 'Naturel', description: 'Apparence identique à vos vraies dents', icon: Sparkles },
+      { title: 'Préservation osseuse', description: 'Maintien de la structure de la mâchoire', icon: CheckCircle },
+      { title: 'Confort optimal', description: 'Mastication normale retrouvée', icon: ThumbsUp, featured: true },
+      { title: 'Entretien simple', description: 'Comme vos dents naturelles', icon: Zap },
+      { title: 'Taux de succès', description: 'Plus de 95% de réussite', icon: Award },
     ],
     process: [
-      'Scanner 3D et planification',
-      'Pose chirurgicale de l\'implant',
-      'Période de cicatrisation (ostéointégration)',
-      'Pose du pilier et de la couronne',
-      'Contrôles réguliers de suivi',
+      { title: 'Scanner 3D', description: 'Planification numérique précise', icon: Search },
+      { title: 'Chirurgie', description: 'Pose de l\'implant en titane', icon: Wrench },
+      { title: 'Cicatrisation', description: 'Période d\'ostéointégration', icon: Clock },
+      { title: 'Prothèse', description: 'Pose de la couronne définitive', icon: Award },
+      { title: 'Suivi', description: 'Contrôles réguliers de maintenance', icon: CheckCircle },
     ],
     faqs: [
       { question: 'Est-ce que la pose d\'implant fait mal ?', answer: 'La pose se fait sous anesthésie locale et est généralement indolore. Des antidouleurs simples suffisent après l\'intervention.' },
@@ -170,24 +198,25 @@ export const servicesData: ServiceData[] = [
     duration: '20-45 min',
     priceRange: '40€ - 120€',
     procedures: [
-      { name: 'Premier examen dentaire', description: 'Introduction douce au cabinet dentaire pour les tout-petits.', duration: '20 min' },
-      { name: 'Scellement des sillons', description: 'Protection des molaires permanentes contre les caries.', duration: '30 min' },
-      { name: 'Application de fluor', description: 'Renforcement de l\'émail dentaire des enfants.', duration: '15 min' },
-      { name: 'Soins des dents de lait', description: 'Traitement adapté des caries sur dents temporaires.', duration: '30-45 min' },
+      { name: 'Premier examen dentaire', description: 'Introduction douce au cabinet dentaire pour les tout-petits.', duration: '20 min', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Search },
+      { name: 'Scellement des sillons', description: 'Protection des molaires permanentes contre les caries.', duration: '30 min', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800', icon: Shield },
+      { name: 'Application de fluor', description: 'Renforcement de l\'émail dentaire des enfants.', duration: '15 min', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Sparkles },
+      { name: 'Soins des dents de lait', description: 'Traitement adapté des caries sur dents temporaires.', duration: '30-45 min', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: Wrench },
     ],
     benefits: [
-      'Approche ludique et rassurante',
-      'Prévention des problèmes futurs',
-      'Éducation à l\'hygiène dentaire',
-      'Suivi de la croissance dentaire',
-      'Création d\'habitudes saines',
+      { title: 'Approche ludique', description: 'Environnement amusant et rassurant', icon: Heart, featured: true },
+      { title: 'Prévention', description: 'Éviter les problèmes dentaires futurs', icon: Shield },
+      { title: 'Éducation', description: 'Apprendre les bonnes habitudes', icon: Award, featured: true },
+      { title: 'Suivi croissance', description: 'Surveillance du développement dentaire', icon: Search },
+      { title: 'Habitudes saines', description: 'Bases solides pour la vie', icon: CheckCircle },
+      { title: 'Sans stress', description: 'Visites agréables et positives', icon: ThumbsUp },
     ],
     process: [
-      'Accueil adapté aux enfants',
-      'Explication ludique des soins',
-      'Examen en douceur',
-      'Traitement si nécessaire',
-      'Récompense et conseils aux parents',
+      { title: 'Accueil enfant', description: 'Environnement adapté et ludique', icon: Heart },
+      { title: 'Explication', description: 'Présentation ludique des soins', icon: Users },
+      { title: 'Examen doux', description: 'Vérification en toute confiance', icon: Search },
+      { title: 'Traitement', description: 'Soins adaptés si nécessaire', icon: Wrench },
+      { title: 'Récompense', description: 'Conseils aux parents', icon: Award },
     ],
     faqs: [
       { question: 'À quel âge emmener mon enfant chez le dentiste ?', answer: 'Nous recommandons une première visite vers l\'âge de 1 an ou dès l\'apparition des premières dents.' },
@@ -207,24 +236,25 @@ export const servicesData: ServiceData[] = [
     duration: '12-24 mois',
     priceRange: '2000€ - 5000€',
     procedures: [
-      { name: 'Aligneurs invisibles', description: 'Gouttières transparentes amovibles pour un traitement discret.', duration: '12-18 mois' },
-      { name: 'Bagues métalliques', description: 'Solution classique efficace pour tous les cas.', duration: '18-24 mois' },
-      { name: 'Bagues céramiques', description: 'Alternative esthétique aux bagues métalliques.', duration: '18-24 mois' },
-      { name: 'Contention', description: 'Maintien des résultats après le traitement actif.', duration: 'À vie' },
+      { name: 'Aligneurs invisibles', description: 'Gouttières transparentes amovibles pour un traitement discret.', duration: '12-18 mois', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Sparkles },
+      { name: 'Bagues métalliques', description: 'Solution classique efficace pour tous les cas.', duration: '18-24 mois', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: Wrench },
+      { name: 'Bagues céramiques', description: 'Alternative esthétique aux bagues métalliques.', duration: '18-24 mois', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Award },
+      { name: 'Contention', description: 'Maintien des résultats après le traitement actif.', duration: 'À vie', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800', icon: Shield },
     ],
     benefits: [
-      'Sourire parfaitement aligné',
-      'Amélioration de la mastication',
-      'Facilitation de l\'hygiène dentaire',
-      'Solutions adaptées à tous les âges',
-      'Options discrètes disponibles',
+      { title: 'Sourire aligné', description: 'Dents parfaitement positionnées', icon: Sparkles, featured: true },
+      { title: 'Mastication améliorée', description: 'Meilleure fonction dentaire', icon: CheckCircle },
+      { title: 'Hygiène facilitée', description: 'Nettoyage plus efficace', icon: Shield, featured: true },
+      { title: 'Tous âges', description: 'Solutions adaptées à chaque patient', icon: Users },
+      { title: 'Options discrètes', description: 'Traitements quasi-invisibles', icon: ThumbsUp },
+      { title: 'Résultats durables', description: 'Sourire pour la vie', icon: Award },
     ],
     process: [
-      'Bilan orthodontique complet',
-      'Scan 3D et plan de traitement',
-      'Pose de l\'appareil choisi',
-      'Rendez-vous de suivi réguliers',
-      'Phase de contention',
+      { title: 'Bilan', description: 'Évaluation orthodontique complète', icon: Search },
+      { title: 'Planification', description: 'Scan 3D et plan de traitement', icon: FileText },
+      { title: 'Appareil', description: 'Pose du dispositif choisi', icon: Wrench },
+      { title: 'Suivi', description: 'Rendez-vous réguliers d\'ajustement', icon: Clock },
+      { title: 'Contention', description: 'Maintien des résultats obtenus', icon: CheckCircle },
     ],
     faqs: [
       { question: 'Les aligneurs invisibles fonctionnent-ils vraiment ?', answer: 'Oui, ils sont très efficaces pour la plupart des cas de malocclusion légère à modérée.' },
@@ -244,24 +274,25 @@ export const servicesData: ServiceData[] = [
     duration: '30-90 min',
     priceRange: '80€ - 250€',
     procedures: [
-      { name: 'Traitement de la douleur', description: 'Soulagement rapide des douleurs dentaires aiguës.', duration: '30-45 min' },
-      { name: 'Réimplantation dentaire', description: 'Prise en charge urgente des dents expulsées par traumatisme.', duration: 'Immédiat' },
-      { name: 'Drainage d\'abcès', description: 'Traitement des infections dentaires avec antibiotiques.', duration: '30-60 min' },
-      { name: 'Réparation de fracture', description: 'Restauration d\'urgence des dents cassées.', duration: '45-90 min' },
+      { name: 'Traitement de la douleur', description: 'Soulagement rapide des douleurs dentaires aiguës.', duration: '30-45 min', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800', icon: Zap },
+      { name: 'Réimplantation dentaire', description: 'Prise en charge urgente des dents expulsées par traumatisme.', duration: 'Immédiat', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800', icon: Clock },
+      { name: 'Drainage d\'abcès', description: 'Traitement des infections dentaires avec antibiotiques.', duration: '30-60 min', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800', icon: Shield },
+      { name: 'Réparation de fracture', description: 'Restauration d\'urgence des dents cassées.', duration: '45-90 min', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800', icon: Wrench },
     ],
     benefits: [
-      'Prise en charge le jour même',
-      'Soulagement rapide de la douleur',
-      'Équipe formée aux urgences',
-      'Équipement de pointe',
-      'Suivi post-urgence assuré',
+      { title: 'Prise en charge rapide', description: 'Rendez-vous le jour même', icon: Zap, featured: true },
+      { title: 'Soulagement immédiat', description: 'Fin de la douleur rapidement', icon: Heart, featured: true },
+      { title: 'Équipe formée', description: 'Experts en gestion d\'urgence', icon: Award },
+      { title: 'Équipement moderne', description: 'Technologie de pointe', icon: CheckCircle },
+      { title: 'Suivi assuré', description: 'Accompagnement post-urgence', icon: Headphones },
+      { title: 'Disponibilité', description: 'Horaires étendus pour vous', icon: Clock },
     ],
     process: [
-      'Appel et évaluation téléphonique',
-      'Rendez-vous en urgence',
-      'Diagnostic rapide',
-      'Traitement immédiat',
-      'Prescription et suivi',
+      { title: 'Appel', description: 'Évaluation téléphonique rapide', icon: Headphones },
+      { title: 'Rendez-vous', description: 'Consultation en urgence', icon: Clock },
+      { title: 'Diagnostic', description: 'Identification du problème', icon: Search },
+      { title: 'Traitement', description: 'Intervention immédiate', icon: Zap },
+      { title: 'Suivi', description: 'Prescription et contrôle', icon: CheckCircle },
     ],
     faqs: [
       { question: 'Que faire si ma dent est tombée ?', answer: 'Récupérez la dent par la couronne (pas la racine), rincez-la sans frotter et conservez-la dans du lait ou votre salive. Appelez-nous immédiatement.' },
