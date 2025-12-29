@@ -12,6 +12,8 @@ import Index from "./pages/Index";
 import MenuPage from "./pages/MenuPage";
 import MenuCategoryPage from "./pages/MenuCategoryPage";
 import MenuItemDetailPage from "./pages/MenuItemDetailPage";
+import ServicesPage from "./pages/ServicesPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 import GalleryPage from "./pages/GalleryPage";
 import ReservationsPage from "./pages/ReservationsPage";
 import ReservationConfirmationPage from "./pages/ReservationConfirmationPage";
@@ -80,6 +82,8 @@ const App = () => {
                   <Route path="/menu" element={<MenuPage />} />
                   <Route path="/menu/:category" element={<MenuCategoryPage />} />
                   <Route path="/menu/:category/:slug" element={<MenuItemDetailPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/services/:slug" element={<ServiceDetailPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/reservations" element={<ReservationsPage />} />
                   <Route path="/reservations/confirmation" element={<ReservationConfirmationPage />} />
